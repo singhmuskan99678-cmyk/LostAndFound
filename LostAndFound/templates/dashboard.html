@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border-color: #667eea;
+        }
+        .card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+        .logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff6b6b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+        form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            display: none;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .delete-btn {
+            background: #ff4757 !important;
+            width: auto !important;
+            padding: 8px 16px !important;
+            margin-left: 10px;
+            font-size: 14px !important;
+        }
+        #historyList {
+            padding: 20px;
+        }
+        .history-item {
+            background: white;
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .history-content {
+            flex: 1;
+        }
+        .history-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+            border: 2px solid #667eea;
+        }
+        .history-item h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .history-item p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .history-actions {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="/" class="logout" onclick="localStorage.removeItem('token')">Logout</a>
+    <h1>📱 Dashboard</h1>
+    
+    <div class="options">
+        <div class="card" onclick="showForm('lost')">
+            <h3>🚫 Report Lost Item</h3>
+            <p>Report your lost item</p>
+        </div>
+        <div class="card" onclick="showForm('found')">
+            <h3>✅ Report Found Item</h3>
+            <p>Report found item</p>
+        </div>
+        <div class="card" onclick="showHistory()">
+            <h3>📋 My History</h3>
+            <p>View your history</p>
+        </div>
+    </div>
+
+    <!-- LOST FORM -->
+    <form id="lostForm">
+        <h3>🚫 Report Lost Item</h3>
+        <input type="text" id="lost_title" placeholder="Item name (e.g. iPhone)" required>
+        <select id="lost_category">
+            <option value="">Select Category</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Documents">Documents</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Others">Others</option>
+        </select>
+        <input type="text" id="lost_location" placeholder="Location (e.g. Library)" required>
+        <textarea id="lost_desc" placeholder="Description..." required></textarea>
+        <input type="tel" id="lost_contact" placeholder="Contact number" required>
+        <input type="file" id="lost_image" accept="image/*">
+        <button type="button" onclick="submitLost()">🚫 Submit Lost Item</button>
+    </form>
+
+    <!-- FOUND FORM -->
+    <form id="foundForm">
+        <h3>✅ Report Found Item</h3>
+        <input type="text" id="found_title" placeholder="Item name (e.g. Wallet)" required>
+        <select id="found_category">
+            <option value="">Select Category</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Documents">Documents</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Others">Others</option>
+        </select>
+        <input type="text" id="found_location" placeholder="Location (e.g. Canteen)" required>
+        <textarea id="found_desc" placeholder="Description..." required></textarea>
+        <input type="tel" id="found_contact" placeholder="Contact number" required>
+        <input type="file" id="found_image" accept="image/*">
+        <button type="button" onclick="submitFound()">✅ Submit Found Item</button>
+    </form>
+
+    <!-- HISTORY SECTION -->
+    <div id="history" style="display:none;">
+        <h3>📋 Your History</h3>
+        <div id="historyList">
+            <p>Click "My History" to load your reports...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+let historyData = [];
+
+function showForm(type) {
+    document.querySelectorAll('form, #history').forEach(el => el.style.display = 'none');
+    if(type === 'lost') {
+        document.getElementById('lostForm').style.display = 'block';
+    } else if(type === 'found') {
+        document.getElementById('foundForm').style.display = 'block';
+    }
+}
+
+function showHistory() {
+    document.querySelectorAll('form, #history').forEach(el => el.style.display = 'none');
+    document.getElementById('history').style.display = 'block';
+    loadHistory();
+}
+
+function submitLost() {
+    const item = {
+        id: Date.now(),
+        title: document.getElementById('lost_title').value,
+        category: document.getElementById('lost_category').value,
+        location: document.getElementById('lost_location').value,
+        desc: document.getElementById('lost_desc').value,
+        contact: document.getElementById('lost_contact').value,
+        type: 'lost',
+        image: document.getElementById('lost_image').files[0] ? URL.createObjectURL(document.getElementById('lost_image').files[0]) : 'https://via.placeholder.com/80?text=No+Image',
+        date: new Date().toLocaleDateString('en-GB')
+    };
+    
+    if(!item.title || !item.location || !item.contact) {
+        alert('Please fill required fields!');
+        return;
+    }
+    
+    historyData.unshift(item);
+    alert('🚫 Lost item reported successfully!\nCheck your history.');
+    document.getElementById('lostForm').reset();
+    showHistory();
+}
+
+function submitFound() {
+    const item = {
+        id: Date.now(),
+        title: document.getElementById('found_title').value,
+        category: document.getElementById('found_category').value,
+        location: document.getElementById('found_location').value,
+        desc: document.getElementById('found_desc').value,
+        contact: document.getElementById('found_contact').value,
+        type: 'found',
+        image: document.getElementById('found_image').files[0] ? URL.createObjectURL(document.getElementById('found_image').files[0]) : 'https://via.placeholder.com/80?text=No+Image',
+        date: new Date().toLocaleDateString('en-GB')
+    };
+    
+    if(!item.title || !item.location || !item.contact) {
+        alert('Please fill required fields!');
+        return;
+    }
+    
+    historyData.unshift(item);
+    alert('✅ Found item reported successfully!\nCheck your history.');
+    document.getElementById('foundForm').reset();
+    showHistory();
+}
+
+function deleteItem(id) {
+    if(confirm('Are you sure you want to delete this item?')) {
+        historyData = historyData.filter(item => item.id != id);
+        loadHistory();
+    }
+}
+
+function loadHistory() {
+    const historyList = document.getElementById('historyList');
+    
+    if(historyData.length === 0) {
+        historyList.innerHTML = '<p>No history found. Report some items!</p>';
+        return;
+    }
+    
+    historyList.innerHTML = historyData.map(item => `
+        <div class="history-item">
+            <img src="${item.image}" alt="${item.title}" onerror="this.src='https://via.placeholder.com/80?text=No+Image'">
+            <div class="history-content">
+                <h4>${item.title}</h4>
+                <p><strong>${item.type.toUpperCase()}</strong> • ${item.category} • ${item.location} • ${item.date}</p>
+                <p>${item.desc}</p>
+                <p><strong>Contact:</strong> ${item.contact}</p>
+            </div>
+            <div class="history-actions">
+                <button class="delete-btn" onclick="deleteItem(${item.id})">🗑️ Delete</button>
+            </div>
+        </div>
+    `).join('');
+}
+</script>
+</body>
+</html>

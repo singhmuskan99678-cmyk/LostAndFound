@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - Campus Lost & Found{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <div class="item-card" style="max-width: 450px; padding: 3rem; text-align: center;">
+            <div style="margin-bottom: 2rem;">
+                <i class="fas fa-user-plus" style="font-size: 4rem; color: #10b981;"></i>
+                <h1 style="font-size: 2.5rem; margin: 1rem 0;">Create Account</h1>
+                <p style="color: var(--text-light);">Join Campus Lost & Found</p>
+            </div>
+
+            <form method="POST" action="/signup" style="text-align: left;">
+                <div class="form-group">
+                    <label><i class="fas fa-user" style="color: #667eea; margin-right: 0.5rem;"></i> Username</label>
+                    <input type="text" name="username" placeholder="Choose a username" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-envelope" style="color: #10b981; margin-right: 0.5rem;"></i> Email</label>
+                    <input type="email" name="email" placeholder="student@campus.edu" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-lock" style="color: #ef4444; margin-right: 0.5rem;"></i> Password</label>
+                    <input type="password" name="password" placeholder="Minimum 6 characters" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-lock" style="color: #f59e0b; margin-right: 0.5rem;"></i> Confirm Password</label>
+                    <input type="password" name="confirm_password" placeholder="Repeat password" required>
+                </div>
+
+                <button type="submit" class="btn btn-success" style="width: 100%; padding: 1.25rem; font-size: 1.1rem;">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb;">
+                <p style="color: var(--text-light); margin: 0;">
+                    Already have an account? 
+                    <a href="/login" style="color: #667eea; font-weight: 600; text-decoration: none;">Sign in here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

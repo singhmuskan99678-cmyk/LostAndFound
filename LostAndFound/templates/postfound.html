@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Report Found Item - Campus Lost & Found{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero Header -->
+    <section class="hero">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+            <i class="fas fa-check-circle" style="font-size: 3rem; color: #10b981;"></i>
+            <div>
+                <h1>Report Found Item</h1>
+                <p style="font-size: 1.1rem; color: var(--text-light);">Help someone recover their lost belongings</p>
+            </div>
+        </div>
+        <a href="/" class="btn" style="background: var(--text-light); padding: 0.8rem 2rem;">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </section>
+
+    <!-- Post Form -->
+    <div class="form-container">
+        <div class="item-card" style="padding: 3rem;">
+            <form method="POST" action="/postfound" enctype="multipart/form-data">
+                <!-- Item Name -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-tag" style="color: #10b981; margin-right: 0.5rem;"></i>
+                        Item Name *
+                    </label>
+                    <input type="text" 
+                           name="name" 
+                           placeholder="e.g. Black leather wallet, Blue umbrella, Gold ring..." 
+                           required>
+                </div>
+
+                <!-- Location -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-map-marker-alt" style="color: #667eea; margin-right: 0.5rem;"></i>
+                        Where did you find it? *
+                    </label>
+                    <input type="text" 
+                           name="location" 
+                           placeholder="e.g. Near A-Block Room 216, Library entrance, Canteen table..." 
+                           required>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-align-left" style="color: #f59e0b; margin-right: 0.5rem;"></i>
+                        Description (Optional)
+                    </label>
+                    <textarea name="description" 
+                              rows="5" 
+                              placeholder="Color, condition, any identifying marks, approximate value..."></textarea>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-camera" style="color: #ef4444; margin-right: 0.5rem;"></i>
+                        Photo (Recommended)
+                    </label>
+                    <input type="file" 
+                           name="image" 
+                           accept="image/*" 
+                           style="padding: 1rem;">
+                    <small style="color: var(--text-light); display: block; margin-top: 0.5rem;">
+                        Clear photos help owners identify their items faster
+                    </small>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-success" style="width: 100%; font-size: 1.2rem; padding: 1.5rem;">
+                    <i class="fas fa-paper-plane"></i>
+                    Report Found Item
+                </button>
+            </form>
+
+            <!-- Quick Stats -->
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+                <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--text-dark);">
+                    <i class="fas fa-users"></i> Campus Stats
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; text-align: center;">
+                    <div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #ef4444;">{{ stats.lost if stats else 0 }}</div>
+                        <div style="color: var(--text-light);">Lost Today</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #10b981;">{{ stats.found if stats else 0 }}</div>
+                        <div style="color: var(--text-light);">Found Today</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Campus Lost & Found{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <i class="fas fa-university"></i>
+                CampusLostFound
+            </a>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/postlost"><i class="fas fa-exclamation-triangle"></i> Lost</a></li>
+                <li><a href="/postfound"><i class="fas fa-check-circle"></i> Found</a></li>
+                <li><a href="/search"><i class="fas fa-search"></i> Search</a></li>
+                <li><a href="/dashboard"><i class="fas fa-chart-bar"></i> Dashboard</a></li>
+                <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Campus Lost & Found. Built for students.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-toggle')?.addEventListener('click', () => {
+            document.querySelector('.nav-links')?.classList.toggle('active');
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
