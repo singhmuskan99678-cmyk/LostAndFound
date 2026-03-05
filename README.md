@@ -119,7 +119,7 @@ Activate it:
 
 ## 🧑‍💻 Author
 
-Your Name\
+Muskan Singh\
 Cybersecurity Analyst \| Developer
 
 ------------------------------------------------------------------------
