@@ -120,7 +120,7 @@ Activate it:
 ## 🧑‍💻 Author
 
 Muskan Singh\
-Cybersecurity Analyst \| Developer
+Software Developer
 
 ------------------------------------------------------------------------
 
